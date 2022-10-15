@@ -1,4 +1,4 @@
-  from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict
 
 
 @dataclass
@@ -18,7 +18,6 @@ class InfoMessage:
     def get_message(self) -> None:
         t = asdict(self)
         return self.MESSAGE.format(*t.values())
-    pass
 
 
 class Training:
@@ -26,33 +25,29 @@ class Training:
     M_IN_KM: int = 1000
     LEN_STEP: float = 0.65
     MIN_IN_H: int = 60
- 
-    def __init__(self,
+    
+    def __init__(
+                 self,
                  action: int,
                  duration: float,
-                 weight: float,
-                 ) -> None:
+                 weight: float,) -> None:
         self.action = action
         self.duration = duration
         self.weight = weight
-        pass
 
     def get_distance(self) -> float:
         """Получить дистанцию в км."""
         return self.action * self.LEN_STEP / self.M_IN_KM
-        pass
 
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
         return self.get_distance() / self.duration
-        pass
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         raise NotImplementedError(
             'Определите get_spent_calories в %s.' %
             (self.__class__.__name__))
-        pass
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -62,7 +57,6 @@ class Training:
             self.get_distance(),
             self.get_mean_speed(),
             self.get_spent_calories())
-        pass
 
 
 class Running(Training):
@@ -78,7 +72,6 @@ class Running(Training):
                 / self.M_IN_KM
                 * self.duration
                 * self.MIN_IN_H)
-    pass
 
 
 class SportsWalking(Training):
@@ -106,7 +99,6 @@ class SportsWalking(Training):
                 * self.weight)
                 * self.duration
                 * self.MIN_IN_H)
-    pass
 
 
 class Swimming(Training):
@@ -138,7 +130,8 @@ class Swimming(Training):
                 + self.first_coef)
             * self.second_coef
             * self.weight)
-    pass
+   
+
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     parameters_train = {
@@ -149,14 +142,12 @@ def read_package(workout_type: str, data: list) -> Training:
         return parameters_train[workout_type](*data)
     else:
         raise ValueError("Тренировка не найдена")
-    pass
-
+  
 
 def main(training: Training) -> None:
     """Главная функция."""
     message_train = training.show_training_info()
     print(message_train.get_message())
-    pass
 
 
 if __name__ == '__main__':
