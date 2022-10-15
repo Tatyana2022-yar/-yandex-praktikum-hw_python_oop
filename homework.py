@@ -19,8 +19,6 @@ class InfoMessage:
         t = asdict(self)
         return self.MESSAGE.format(*t.values())
     pass
-
-
 class Training:
     """Базовый класс тренировки."""
     M_IN_KM: int = 1000
@@ -63,8 +61,6 @@ class Training:
             self.get_mean_speed(),
             self.get_spent_calories())
         pass
-
-
 class Running(Training):
     """Тренировка: бег."""
     first_coef: int = 18
@@ -79,8 +75,6 @@ class Running(Training):
                 * self.duration
                 * self.MIN_IN_H)
     pass
-
-
 class SportsWalking(Training):
     """Тренировка: спортивная ходьба."""
     first_coef: float = 0.035
@@ -107,8 +101,6 @@ class SportsWalking(Training):
                 * self.duration
                 * self.MIN_IN_H)
     pass
-
-
 class Swimming(Training):
     """Тренировка: плавание."""
     LEN_STEP = 1.38
@@ -139,8 +131,6 @@ class Swimming(Training):
             * self.second_coef
             * self.weight)
     pass
-
-
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     parameters_train = {
@@ -152,15 +142,11 @@ def read_package(workout_type: str, data: list) -> Training:
     else:
         raise ValueError("Тренировка не найдена")
     pass
-
-
 def main(training: Training) -> None:
     """Главная функция."""
     message_train = training.show_training_info()
     print(message_train.get_message())
     pass
-
-
 if __name__ == '__main__':
     packages = [
         ('SWM', [720, 1, 80, 25, 40]),
